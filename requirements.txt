@@ -1,0 +1,18 @@
+# Sentinel Streamlit application runtime. Install torch/torchvision with the
+# matching accelerator build recommended by PyTorch when using an NVIDIA GPU.
+# Trained model weights are large binary artifacts and are not pip packages.
+# See MODEL_ASSETS.md for the required bundle and checksum/setup guidance.
+streamlit>=1.50,<2
+altair>=5.5,<7
+numpy>=1.26,<3
+pandas>=2.2,<4
+Pillow>=10,<14
+opencv-python>=4.10,<5
+scikit-learn==1.6.1
+joblib>=1.4,<2
+torch>=2.5,<3
+torchvision>=0.20,<1
+ultralytics>=8.3,<9
+stable-baselines3>=2.4,<3
+requests>=2.31,<3
+imageio-ffmpeg>=0.5,<1

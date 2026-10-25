@@ -1,0 +1,57 @@
+# Data and outputs (live on Google Drive, never in git)
+data/
+outputs/
+vector_cache/
+*.npy
+*.npz
+!assets/calibration_grid.npz
+!assets/calibration_zipper.npz
+!assets/calibration_hazelnut.npz
+!assets/calibration_leather.npz
+!assets/calibration_toothbrush.npz
+!assets/stfpm_calibration_grid.npz
+
+# Local dummy test data
+local_test/
+
+# Model checkpoints / weights
+checkpoints/
+models/
+*.pt
+*.pth
+*.ckpt
+*.joblib
+
+# Python / Jupyter
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.env*
+!.env.example
+.streamlit/secrets.toml
+
+# Credentials, certificates, and local service configuration
+*.pem
+*.key
+*.p12
+*.pfx
+*credentials*.json
+*service-account*.json
+secrets.toml
+.netrc
+.npmrc
+.pypirc
+.ssh/
+.aws/
+.config/gcloud/
+id_rsa
+id_ed25519

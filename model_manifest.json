@@ -1,0 +1,69 @@
+{
+  "project": "Hybrid STFPM-for-grid + YOLO26/PatchCore-for-other-categories + DINOv2 + Temporal Transformer + PPO",
+  "created_utc": "2026-10-25T05:03:58Z",
+  "dataset_source": "Kaggle mirror: ipythonx/mvtec-ad",
+  "dataset_categories": [
+    "grid",
+    "zipper",
+    "hazelnut",
+    "leather",
+    "toothbrush"
+  ],
+  "dataset_location": "MVTec AD data is not included in this repository; users must obtain it separately and follow its terms.",
+  "primary_anomaly_detector": {
+    "grid": "STFPM-ResNet18",
+    "zipper": "YOLO26 + PatchCore-style k-NN",
+    "hazelnut": "YOLO26 + PatchCore-style k-NN",
+    "leather": "YOLO26 + PatchCore-style k-NN",
+    "toothbrush": "YOLO26 + PatchCore-style k-NN"
+  },
+  "stfpm_categories_trained": [
+    "grid"
+  ],
+  "stfpm_epochs": 15,
+  "stfpm_input_size": 256,
+  "stfpm_models": {
+    "grid": {
+      "teacher": "models/stfpm_teacher_resnet18_grid.pth",
+      "student": "models/stfpm_student_resnet18_grid.pth",
+      "calibration": "assets/stfpm_calibration_grid.npz"
+    }
+  },
+  "legacy_baseline": "YOLO26 global embedding + Wide-ResNet PatchCore-style k-NN ensemble",
+  "subtype_classifier": "dinov2_vits14 visual features + regularized LinearSVC; YOLO26 LinearSVC baseline included",
+  "temporal_transformer_weights": "models/causal_temporal_transformer.pt",
+  "ppo_model": "models/ppo_inspection_policy.zip (not included in this repository)",
+  "ppo_timesteps": 40000,
+  "score_calibration": "Per-category empirical percentile against normal-only calibration references; not a defect probability.",
+  "temporal_input": "Common routed score/local/global evidence fields and temporal score dynamics; STFPM-specific map features are not required for non-grid categories.",
+  "human_review_guardrail": {
+    "score_min": 0.97,
+    "delta_min": 0.2
+  },
+  "caveat": "MVTec AD contains still images; temporal sequences are synthetic and not real-video deployment evidence.",
+  "artifact_distribution": {
+    "trained_model_directory": "models/ (not committed; approximately 834 MB locally)",
+    "calibration_assets": "assets/*.npz (included)",
+    "pipeline_a_inference": "Unavailable: no integrated Mahalanobis/Q-learning inference export is bundled.",
+    "ppo_checkpoint": "Unavailable: no PPO checkpoint is bundled; the app uses its labeled adaptive video triage fallback.",
+    "required_for_pipeline_b": [
+      "models/yolo26n.pt",
+      "models/wide_resnet50_2_patch_extractor.pth",
+      "models/stfpm_teacher_resnet18_grid.pth",
+      "models/stfpm_student_resnet18_grid.pth",
+      "models/yolo26_embedding_knn_<category>.joblib",
+      "models/patchcore_patch_bank_<category>.pt",
+      "assets/stfpm_calibration_grid.npz",
+      "assets/calibration_<category>.npz"
+    ],
+    "required_for_rl": [
+      "models/causal_temporal_transformer.pt",
+      "models/temporal_transformer_input_scaler.joblib"
+    ],
+    "pipeline_a_exports": [],
+    "optional_subtype_files": [
+      "models/dinov2_vits14_subtype_backbone.pth",
+      "models/defect_subtype_<category>_dinov2_vits14_linearsvm.joblib"
+    ]
+  }
+}
